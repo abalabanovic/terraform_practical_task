@@ -1,0 +1,36 @@
+provider "google" {
+
+    credentials = file("default_key.json")
+    project = "gd-gcp-gridu-devops-t1-t2"
+    region = "us-central1"
+    zone = "us-central1-a"
+  
+}
+
+module "resource" {
+
+    source = "./resources"
+    bucket_name = "abalabanovic-bucket-cloud-function"
+    secret_value = "123456789"
+    cloud_function_name = "abalabanovic-cloud-function"
+    secret_id = "abalabanovic-secret"
+    cloud_function_runtime = "python39"
+    cloud_function_available_memory = 256
+    cloud_function_entrypoint = "hello_world"
+    cloud_function_timeout = 60
+    source_function = "function_source.zip"
+    project_id = "gd-gcp-gridu-devops-t1-t2"
+
+  
+}
+
+module "network" {
+
+    source = "./network"
+    project = "gd-gcp-gridu-devops-t1-t2"
+    subnetwork_name = "abalabanovic-subnet"
+    network_name = "abalabanovic-vpc"
+    group_selflink = module.resource.cloud_function_self_link
+  
+}
+
