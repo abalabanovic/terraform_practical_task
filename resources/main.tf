@@ -43,8 +43,8 @@ resource "google_cloudfunctions_function" "cloud_function" {
   runtime     = var.cloud_function_runtime
   entry_point = var.cloud_function_entrypoint
   region      = var.region
-  source_archive_bucket = google_storage_bucket.storage_bucket.name
-  source_archive_object = var.source_function
+  source_archive_bucket = "cloud_function_test_abalabanovic"
+  source_archive_object = "function.zip"
   trigger_http = true
   available_memory_mb   = var.cloud_function_available_memory
   timeout               = var.cloud_function_timeout

@@ -27,9 +27,10 @@ module "resource" {
 module "network" {
 
     source = "./network"
-    project = "terraform-abalabanovic-tfstate"
+    project = "devops-t2-development"
     subnetwork_name = "abalabanovic-subnet"
     network_name = "abalabanovic-vpc"
+    cidr_range = "10.0.0.0/24"
     group_selflink = module.resource.cloud_function_self_link
   
 }
