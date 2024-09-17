@@ -1,7 +1,7 @@
 provider "google" {
 
-    credentials = file("default_key.json")
-    project = "gd-gcp-gridu-devops-t1-t2"
+    credentials = file("abalabanovic-private.json")
+    project = "devops-t2-development"
     region = "us-central1"
     zone = "us-central1-a"
   
@@ -19,7 +19,7 @@ module "resource" {
     cloud_function_entrypoint = "hello_world"
     cloud_function_timeout = 60
     source_function = "function_source.zip"
-    project_id = "gd-gcp-gridu-devops-t1-t2"
+    project_id = "devops-t2-development"
 
   
 }
@@ -27,7 +27,7 @@ module "resource" {
 module "network" {
 
     source = "./network"
-    project = "gd-gcp-gridu-devops-t1-t2"
+    project = "terraform-abalabanovic-tfstate"
     subnetwork_name = "abalabanovic-subnet"
     network_name = "abalabanovic-vpc"
     group_selflink = module.resource.cloud_function_self_link

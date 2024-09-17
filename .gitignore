@@ -3,3 +3,4 @@ default_key.json
 .terraform/
 *.tfstate
 *.tfstate.backup
+abalabanovic-private.json
