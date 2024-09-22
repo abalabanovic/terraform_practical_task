@@ -35,8 +35,8 @@ variable "project" {
 
 }
 
-variable "group_selflink" {
+variable "cloudfunction_id" {
 
-    description = "Self link for backend"
+    description = "Id of cloud function"
   
 }

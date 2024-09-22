@@ -85,3 +85,10 @@ variable "source_function" {
     description = "Function source code"
   
 }
+
+variable "source_function_bucket" {
+
+    type = string
+    description = "Bucket where the source code is stored"
+  
+}

@@ -20,6 +20,19 @@ resource "google_compute_global_address" "lb_address" {
   name = "lb-ip"
 }
 
+/*
+
+resource "google_compute_region_network_endpoint_group" "serverless_network_endpoint_group" {
+
+  network_endpoint_type = "SERVERLESS"
+  region = var.region
+  name = "serverless-endpoint"
+  cloud_function {
+    function = var.cloudfunction_id
+  }
+  
+}
+
 resource "google_compute_forwarding_rule" "http_forwarding_rule" {
   name       = "http-forwarding-rule"
   target     = google_compute_target_http_proxy.http_proxy.self_link
@@ -42,12 +55,13 @@ resource "google_compute_backend_service" "backend_service" {
   name = "backend-service"
 
   backend {
-    group = var.group_selflink
+    group = google_compute_region_network_endpoint_group.serverless_network_endpoint_group.id
   }
 
-  
+
 }
 
+*/
 
 
 
