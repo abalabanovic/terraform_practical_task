@@ -1,25 +1,44 @@
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
+const { Storage } = require('@google-cloud/storage');
 
-// Initialize the Secret Manager client
-const client = new SecretManagerServiceClient();
+
+const secretManagerClient = new SecretManagerServiceClient();
+
+
+const storage = new Storage();
 
 exports.readSecret = async (req, res) => {
   try {
-    // Replace 'my-secret' with the actual secret name
+   
     const secretName = 'projects/devops-t2-development/secrets/abalabanovic-secret/versions/latest';
 
-    // Access the secret version
-    const [version] = await client.accessSecretVersion({ name: secretName });
+    
+    const [version] = await secretManagerClient.accessSecretVersion({ name: secretName });
 
-    // Extract the secret payload
+   
     const secretPayload = version.payload.data.toString('utf8');
     
     console.log(`Secret: ${secretPayload}`);
+
     
-    // Send the secret payload in the HTTP response
-    res.status(200).send(`Secret: ${secretPayload}`);
+    const bucketName = 'abalabanovic-read-bucket';
+    const bucket = storage.bucket(bucketName);
+
+    
+    const [files] = await bucket.getFiles();
+
+   
+    const fileNames = files.map(file => file.name);
+    console.log('Files in bucket:', fileNames);
+
+    
+    res.status(200).send({
+      secret: secretPayload,
+      files: fileNames
+    });
+
   } catch (err) {
-    console.error(`Error accessing secret: ${err}`);
-    res.status(500).send('Error accessing secret');
+    console.error(`Error: ${err}`);
+    res.status(500).send('Error accessing secret or listing bucket files');
   }
 };
